@@ -1,0 +1,7 @@
+                    if answer == " (ক)" or answer == " ক":
+                        sheet.cell(row, 6, ko)
+                    if answer == " (খ)" or answer == " খ":
+                        sheet.cell(row, 6, kho)
+                    if answer == " (গ)" or answer == " গ":
+                        sheet.cell(row, 6, go)
+                    if answer == " (ঘ)" or answer == " ঘ":
