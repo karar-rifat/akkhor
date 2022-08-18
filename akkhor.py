@@ -30,78 +30,84 @@ with open('2.txt', 'r') as file:
         # print(line)
         # if line == "৩.১ এবং ৩.২ অর্থ সমমূল্যের ধারণা ও গুরুত্ব:\n":
         #     break
-        # if regex.search("([০-৯].){2,3}", line):
-        #     continue
-        if regex.search("([অ-য়]+ অধ্যায়)|([০-৯৯][অ-য়] অধ্যায়)", line):
-            # reset
-            if answer_flag:
-                answer_flag = False
-                print(answer)
-                if answer == " (ক)":
-                    sheet.cell(row, 6, ko)
-                if answer == " (খ)":
-                    sheet.cell(row, 6, kho)
-                if answer == " (গ)":
-                    sheet.cell(row, 6, go)
-                if answer == " (ঘ)":
-                    sheet.cell(row, 6, gho)
-                answer = ""
-            if definition_flag:
-                definition_flag = False
-                print(definition)
-                sheet.cell(row, 7, definition)
-                definition = ""
-            if ko_option_flag:
-                ko_option_flag = False
-                print(option)
-                ko = option
-                sheet.cell(row, 2, option)
-                option = ""
-            if kho_option_flag:
-                kho_option_flag = False
-                print(option)
-                kho = option
-                sheet.cell(row, 3, option)
-                option = ""
-            if go_option_flag:
-                go_option_flag = False
-                print(option)
-                go = option
-                sheet.cell(row, 4, option)
-                option = ""
-            if gho_option_flag:
-                gho_option_flag = False
-                print(option)
-                gho = option
-                sheet.cell(row, 5, option)
-                option = ""
-            sheetCount += 1
-            sheetName = "chapter " + str(sheetCount)
-            workbook.create_sheet(sheetName)
-            workbook.active = workbook[sheetName]
-            sheet = workbook.active
-            workbook.save("akkhor.xlsx")
-            row = 0
+        if regex.search("([০-৯].){2,3}", line):
+            continue
+        # if regex.search("([অ-য়]+ অধ্যায়)|([০-৯৯][অ-য়] অধ্যায়)", line):
+        if len(line.split(" ")) == 2:
+            if regex.search("([অ-য়]+ অধ্যায়)|([০-৯৯][অ-য়] অধ্যায়)", line):
+                # reset
+                if answer_flag:
+                    answer_flag = False
+                    print(answer)
+                    if regex.search("ক", answer):
+                        sheet.cell(row, 6, ko)
+                    if regex.search("খ", answer):
+                        sheet.cell(row, 6, kho)
+                    if regex.search("গ", answer):
+                        sheet.cell(row, 6, go)
+                    if regex.search("ঘ", answer):
+                        sheet.cell(row, 6, gho)
+                    answer = ""
+                if definition_flag:
+                    definition_flag = False
+                    print(definition)
+                    sheet.cell(row, 7, definition)
+                    definition = ""
+                if ko_option_flag:
+                    ko_option_flag = False
+                    print(option)
+                    ko = option
+                    sheet.cell(row, 2, option)
+                    option = ""
+                if kho_option_flag:
+                    kho_option_flag = False
+                    print(option)
+                    kho = option
+                    sheet.cell(row, 3, option)
+                    option = ""
+                if go_option_flag:
+                    go_option_flag = False
+                    print(option)
+                    go = option
+                    sheet.cell(row, 4, option)
+                    option = ""
+                if gho_option_flag:
+                    gho_option_flag = False
+                    print(option)
+                    gho = option
+                    sheet.cell(row, 5, option)
+                    option = ""
+                ko = ""
+                kho = ""
+                go = ""
+                gho = ""
+                sheetCount += 1
+                sheetName = "chapter " + str(sheetCount)
+                workbook.create_sheet(sheetName)
+                workbook.active = workbook[sheetName]
+                sheet = workbook.active
+                workbook.save("akkhor.xlsx")
+                row = 0
         # if row == 4:
         #     break
         for word in line.split():
 
             #  [q o1 o2 o3 o4 ans def]
             # question
-            if regex.search("[০-৯৯]।", word):
+            if regex.search("[০-৯৯]।", word) or regex.search("[(][০-৯]+[)]", word):
                 # print(word)
                 # raise a question flag
                 # reset
                 if answer_flag:
                     answer_flag = False
                     print(answer)
-                    if answer == " (ক)":
+                    if regex.search("ক", answer):
                         sheet.cell(row, 6, ko)
-                    if answer == " (খ)":
+                    if regex.search("খ", answer):
                         sheet.cell(row, 6, kho)
-                    if answer == " (গ)":
+                    if regex.search("গ", answer):
                         sheet.cell(row, 6, go)
-                    if answer == " (ঘ)":
+                    if regex.search("ঘ", answer):
                         sheet.cell(row, 6, gho)
                     answer = ""
                 if definition_flag:
@@ -139,7 +145,7 @@ with open('2.txt', 'r') as file:
             #
 
             if not answer_flag:
-                if word == "(ক)":
+                if word == "(ক)" or word == "(ক)":
                     question_flag = False
                     print(question)
                     sheet.cell(row, 1, question)
@@ -149,7 +155,7 @@ with open('2.txt', 'r') as file:
 
                     # print("ko")
 
-                if word == "(খ)":
+                if word == "(খ)" or word == "(খ)":
                     # print("kho")
                     ko_option_flag = False
                     print(option)
@@ -159,7 +165,7 @@ with open('2.txt', 'r') as file:
                     kho_option_flag = True
                     continue
 
-                if word == "(গ)":
+                if word == "(গ)" or word == "(গ)":
                     kho_option_flag = False
                     print(option)
                     kho = option
@@ -168,7 +174,7 @@ with open('2.txt', 'r') as file:
                     go_option_flag = True
                     continue
 
-                if word == "(ঘ)":
+                if word == "(ঘ)" or word == "(ঘ)":
                     go_option_flag = False
                     print(option)
                     go = option
@@ -178,7 +184,7 @@ with open('2.txt', 'r') as file:
                     continue
 
             # answer
-            if word == "উত্তরঃ":
+            if word == "উত্তরঃ" or word == "উত্তরঃ" or word == "উত্তর ঃ":
                 if gho_option_flag:
                     gho_option_flag = False
                     print(option)
@@ -199,7 +205,7 @@ with open('2.txt', 'r') as file:
                 continue
 
             # definition
-            if word == "ব্যাখ্যাঃ" or word == "ব্যাখাঃ" or word == "নোট":
+            if word == "ব্যাখ্যাঃ" or word == "ব্যাখাঃ" or word == "নোট:" or word == "নোটঃ":
                 if gho_option_flag:
                     gho_option_flag = False
                     print(option)
@@ -209,13 +215,13 @@ with open('2.txt', 'r') as file:
                 if answer_flag:
                     answer_flag = False
                     print(answer)
-                    if answer == " (ক)":
+                    if regex.search("ক", answer):
                         sheet.cell(row, 6, ko)
-                    if answer == " (খ)":
+                    if regex.search("খ", answer):
                         sheet.cell(row, 6, kho)
-                    if answer == " (গ)":
+                    if regex.search("গ", answer):
                         sheet.cell(row, 6, go)
-                    if answer == " (ঘ)":
+                    if regex.search("ঘ", answer):
                         sheet.cell(row, 6, gho)
                     answer = ""
                 definition_flag = True

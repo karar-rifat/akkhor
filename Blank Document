@@ -5,3 +5,15 @@
                     if answer == " (গ)" or answer == " গ":
                         sheet.cell(row, 6, go)
                     if answer == " (ঘ)" or answer == " ঘ":
+                    
+                    if regex.search("ক", answer):
+                        sheet.cell(row, 6, ko)
+                    if regex.search("খ", answer):
+                        sheet.cell(row, 6, kho)
+                    if regex.search("গ", answer):
+                        sheet.cell(row, 6, go)
+                    if regex.search("ঘ", answer):
+                        sheet.cell(row, 6, gho)
+                        
+                        উদ্দীপ
+                        অনুচ্ছেদ
